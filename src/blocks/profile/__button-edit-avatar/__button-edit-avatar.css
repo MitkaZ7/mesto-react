@@ -12,6 +12,7 @@
   opacity: 0;
   border-radius: 50%;
   border: none;
+  outline: none;
   cursor: pointer;
 }
 .profile__button-edit-avatar:hover {
