@@ -14,10 +14,6 @@ function Main(props) {
         setUserAbout(userData.about);
         setUserAvatar(userData.avatar);
         setCards(cardData);
-        // userInfo.setUserInfo(userData.userName, userData.about);
-        // userInfo.setUserAvatar(userData.avatar);
-        // userId = userData._id;
-        // cardsContainer.render(cardData.reverst());
       })
       .catch((error) => {
         console.log(error);
@@ -28,12 +24,12 @@ function Main(props) {
             <section className="profile">
                 <div className="profile__card">
                     <div className="profile__avatar-container">
-                        <img src="#" alt="" className="profile__avatar" style={{backgroundImage: `url(${userAvatar})`, backgroundSize: 'Cover'}}/>
+                        <div className="profile__avatar" style={{backgroundImage: `url(${userAvatar})`, backgroundSize: 'Cover'}}></div>
                         <button className="profile__button-edit-avatar" type="button" onClick={props.onEditAvatar}></button>
                     </div>
                     <div className="profile__info">
                         <h1 className="profile__name">{userName}</h1>
-              <button className="profile__button-edit button button_type_edit" type="button" onClick={props.onEditProfile}></button>
+                        <button className="profile__button-edit button button_type_edit" type="button" onClick={props.onEditProfile}></button>
                         <p className="profile__about">{userAbout}</p>
                     </div>
                 </div>
@@ -41,9 +37,9 @@ function Main(props) {
             </section>
             <section className="places">
                 <ul className="places__cards">
-            {cards.map((card) => {
-              return (<Card key={card._id} card={card} onCardClick={props.onCardClick} />)
-            })}
+                {cards.map((card) => {
+                  return (<Card key={card._id} card={card} onCardClick={props.onCardClick} />)
+                })}
                 </ul>
             </section>
         </main>
