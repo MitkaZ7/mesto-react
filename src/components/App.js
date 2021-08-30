@@ -3,7 +3,7 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
-import PopupImagePreview from './PopupImagePreview';
+import ImagePopup from './ImagePopup';
 
 function App() {
   const [isPopupEditProfileOpen, setOpenPopupEdtiProfileOpen] = React.useState(false);
@@ -69,7 +69,7 @@ function App() {
           </fieldset>
         } />
       <PopupWithForm name="remove-card" title="Вы уверены?" onClose={closeAllPopups} buttonTitle="Да" />
-      <PopupImagePreview card={selectedCard} onClose={closeAllPopups} />
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </>
   );
 }
