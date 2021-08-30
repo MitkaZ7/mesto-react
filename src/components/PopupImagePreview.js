@@ -1,13 +1,13 @@
 import React from 'react';
-function PopupImagePreview() {
+function PopupImagePreview(props) {
     return (
-        <div className="popup popup_type_image">
+      <div className={`popup popup_type_image ${props.card_id ? "popup_status_opened" : ""} `}>
             <div className="popup__image-container">
-                <button className="popup__button-close button" type="button"></button>
+                <button className="popup__button-close button" type="button" onClick={props.onClose}></button>
                 <figure className="popup__caption-container">
-                    <img src="#" alt="#" className="popup__image" />
+                    <img src={props.card.link} alt={props.card.name} className="popup__image" />
                     <figcaption className="popup__caption">
-                        <h2 className="popup__place-caption"></h2>
+                        <h2 className="popup__place-caption">{props.card.name}</h2>
                     </figcaption>
                 </figure>
             </div>

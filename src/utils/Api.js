@@ -1,4 +1,4 @@
-export default class Api {
+class Api {
   constructor(url, token) {
     this._url = url;
     this._token = token;
@@ -100,5 +100,5 @@ export default class Api {
       .then(this._checkResponse)
   }
 }
-
-export const api = new Api('https://nomoreparties.co/v1/cohort-26/', '2ceacd5c-fca2-4318-a334-9732db7cb6fc');
+const api = new Api('https://nomoreparties.co/v1/cohort-26/', '2ceacd5c-fca2-4318-a334-9732db7cb6fc');
+export default api;
