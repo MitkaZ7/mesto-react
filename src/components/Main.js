@@ -24,7 +24,7 @@ function Main(props) {
             <section className="profile">
                 <div className="profile__card">
                     <div className="profile__avatar-container">
-                        <div className="profile__avatar" style={{backgroundImage: `url(${userAvatar})`, backgroundSize: 'Cover'}}></div>
+                        <div className="profile__avatar" style={{backgroundImage: `url(${userAvatar})`}}></div>
                         <button className="profile__button-edit-avatar" type="button" onClick={props.onEditAvatar}></button>
                     </div>
                     <div className="profile__info">
