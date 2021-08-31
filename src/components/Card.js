@@ -8,7 +8,7 @@ function Card(props) {
         <li className="place">
             <button className="place__button-remove button"></button>
             <figure className="place__card">
-                <div className="place__image" onClick={handleClick} style={{ backgroundImage: `url(${props.card.link})`, backgroundSize: 'Cover' }}></div>
+                <div className="place__image" onClick={handleClick} style={{ backgroundImage: `url(${props.card.link})`}}></div>
                 <figcaption className="place__caption">
                     <h2 className="place__name">{props.card.name}</h2>
                     <div className="place__like-container">
