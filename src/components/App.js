@@ -68,28 +68,67 @@ function App() {
     api
       .getInitialCards()
       .then((res) => {
-        setCards(res)
+        setCards(res);
       })
       .catch((error) => {
         console.log('Ошибка, карточки н загрузились');
       })
   }, []);
+  function handleAddPlaceSumbmit(card) {
+    api
+      .addNewCard(card)
+      .then((res) => {
+        setCards([res, ...cards]);
+        closeAllPopups();
+      })
+      .catch((error) => {
+        console.log('Ошибка, не удалось добавить новую карточку');
+      })
+  }
+
+  useEffect(() => {
+     api
+      .getUserInfo()
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((error) => {
+        console.log('Ошибка, данные пользователя не загрузились');
+      })
+  }, []);
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(myLike => myLike._id === currentUser._id);
+    api
+      .likeCard(card._id, isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    })
+      .catch((error) => {
+        console.log('Ошибка установки лайка');
+      });
+  }
+
+  function handleCardDelete(card) {
+    api
+      .removeCard(card._id)
+      .then(() => {
+        setCards((cards) => cards.filter((card) => card._id !== card._id))
+      })
+      .catch((error) => {
+        console.log('Ошибка удаления карточки');
+      })
+  }
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
         <Main onEditProfile={handleEditProfileClick} onAddCard={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick}
-        onCardClick={handleCardClick} cards={cards}/>
+          onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelet={handleCardDelete} cards={cards}/>
         <Footer />
       </div>
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={handlePopupClose} onUpdateProfile={handleUpdateProfile}></EditProfilePopup>
-      <PopupWithForm name="add-place" title="Новое место" isOpen={isAddCardPopupOpen} onClose={closeAllPopups} buttonTitle="Создать">
-        <input id="input-place-name" type="text" className="popup__form-input popup__form-input_type_place-name" placeholder="Название" name="placeName" minLength="2" maxLength="30" required/>
-        <span className="popup__input-error input-place-name-error"></span>
-        <input id="input-image-url" type="url" className="popup__form-input popup__input_place-link" placeholder="Ссылка на картинку" name="imageUrl" required />
-        <span className="popup__input-error input-image-url-error"></span>
-      </PopupWithForm>
+      <AddPlacePopup isOpen={isAddCardPopupOpen} onClose={handlePopupClose} onAddPlace={handleAddPlaceSumbmit}></AddPlacePopup>
       <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={handlePopupClose} onUpdateAvatar={handleUpdateAvatar}></EditAvatarPopup>
       <PopupWithForm name="remove-card" title="Вы уверены?" onClose={closeAllPopups} buttonTitle="Да" />
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
