@@ -8,13 +8,13 @@ function Main(props) {
             <section className="profile">
                 <div className="profile__card">
                     <div className="profile__avatar-container">
-                        <img className="profile__avatar" src={currentUser.userAvatar} alt='Аватар пользователя'/>
+              <div className="profile__avatar" style={{ backgroundImage: `url(${currentUser.avatar})` }}></div>
                         <button className="profile__button-edit-avatar" type="button" onClick={props.onEditAvatar}></button>
                     </div>
                     <div className="profile__info">
-                        <h1 className="profile__name">{currentUser.userName}</h1>
+                        <h1 className="profile__name">{currentUser.name}</h1>
                         <button className="profile__button-edit button button_type_edit" type="button" onClick={props.onEditProfile}></button>
-                        <p className="profile__about">{currentUser.userAbout}</p>
+                        <p className="profile__about">{currentUser.about}</p>
                     </div>
                 </div>
                 <button className="profile__button-add button button_type_add" type="button" onClick={props.onAddCard}></button>

@@ -9,9 +9,6 @@ import ImagePopup from './ImagePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import EditProfilePopup from './EditProfilePopup';
 import AddPlacePopup from './AddPlacePopup';
-
-
-
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -42,9 +39,9 @@ function App() {
       closeAllPopups();
     }
   }
-  function handleUpdateAvatar(userPofile) {
+  function handleUpdateAvatar(avatar) {
     api
-      .editUserAvatar(userPofile)
+      .editUserAvatar(avatar)
       .then((res) => {
         setCurrentUser(res)
         closeAllPopups()
@@ -66,14 +63,15 @@ function App() {
   }
   useEffect(() => {
     api
-      .getInitialCards()
+      .getUserInfo()
       .then((res) => {
-        setCards(res);
+        setCurrentUser(res);
       })
       .catch((error) => {
-        console.log('Ошибка, карточки н загрузились');
+        console.log('Ошибка, данные пользователя не загрузились');
       })
   }, []);
+
   function handleAddPlaceSumbmit(card) {
     api
       .addNewCard(card)
@@ -86,21 +84,11 @@ function App() {
       })
   }
 
-  useEffect(() => {
-     api
-      .getUserInfo()
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch((error) => {
-        console.log('Ошибка, данные пользователя не загрузились');
-      })
-  }, []);
   function handleCardLike(card) {
     const isLiked = card.likes.some(myLike => myLike._id === currentUser._id);
     api
       .likeCard(card._id, isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
     })
       .catch((error) => {
         console.log('Ошибка установки лайка');
@@ -111,13 +99,22 @@ function App() {
     api
       .removeCard(card._id)
       .then(() => {
-        setCards((cards) => cards.filter((card) => card._id !== card._id))
+        setCards((cards) => cards.filter((card) => card._id !== card._id));
       })
       .catch((error) => {
         console.log('Ошибка удаления карточки');
       })
   }
-
+  useEffect(() => {
+    api
+      .getInitialCards()
+      .then((res) => {
+        setCards(res);
+      })
+      .catch((error) => {
+        console.log('Ошибка, карточки н загрузились');
+      })
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

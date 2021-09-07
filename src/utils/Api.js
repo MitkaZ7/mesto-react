@@ -50,7 +50,7 @@ class Api {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        avatar: data.avatarLink
+        avatar: data.avatar
       })
     })
       .then(this._checkResponse)
@@ -63,8 +63,8 @@ class Api {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name: data.name,
-        link: data.link
+        name: data.placeName,
+        link: data.imageUrl
       })
     })
     .then(this._checkResponse)
