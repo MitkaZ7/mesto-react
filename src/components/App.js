@@ -87,7 +87,8 @@ function App() {
   function handleCardLike(card) {
     const isLiked = card.likes.some(myLike => myLike._id === currentUser._id);
     api
-      .likeCard(card._id, isLiked).then((newCard) => {
+      .likeCard(card._id, isLiked)
+      .then((newCard) => {
       setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
     })
       .catch((error) => {
@@ -96,14 +97,15 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    api
+      api
       .removeCard(card._id)
-      .then(() => {
-        setCards((cards) => cards.filter((card) => card._id !== card._id));
-      })
-      .catch((error) => {
-        console.log('Ошибка удаления карточки');
-      })
+        .then(() => {
+          setCards(cards.filter((c) => c._id !== card._id))
+          closeAllPopups();
+        })
+        .catch((error) => {
+          console.log('Ошибка удаления карточки');
+        })
   }
   useEffect(() => {
     api
@@ -121,7 +123,7 @@ function App() {
       <div className="page">
         <Header />
         <Main onEditProfile={handleEditProfileClick} onAddCard={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick}
-          onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelet={handleCardDelete} cards={cards}/>
+          onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} cards={cards}/>
         <Footer />
       </div>
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={handlePopupClose} onUpdateUser={handleUpdateProfile}></EditProfilePopup>
