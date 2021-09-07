@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Header from './Header';
@@ -34,11 +34,11 @@ function App() {
     setIsAddCardPopupOpen(false);
     setSelectedCard({});
   }
-  function handlePopupClose(evt) {
-    if (evt.target === evt.currentTarget) {
-      closeAllPopups();
-    }
-  }
+  // function closeOverlay(evt) {
+  //   if (evt.target === evt.currentTarget) {
+  //     closeAllPopups()
+  //   }
+  // }
   function handleUpdateAvatar(avatar) {
     api
       .editUserAvatar(avatar)
@@ -107,6 +107,7 @@ function App() {
           console.log('Ошибка удаления карточки');
         })
   }
+
   useEffect(() => {
     api
       .getInitialCards()
@@ -118,6 +119,15 @@ function App() {
       })
   }, []);
 
+  React.useEffect(() => {
+    function handleEscClose(evt) {
+      if (evt.key === 'Escape') {
+        closeAllPopups()
+      }
+    }
+    document.addEventListener('keyup', handleEscClose);
+  }, []);
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -126,11 +136,11 @@ function App() {
           onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} cards={cards}/>
         <Footer />
       </div>
-      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={handlePopupClose} onUpdateUser={handleUpdateProfile}></EditProfilePopup>
-      <AddPlacePopup isOpen={isAddCardPopupOpen} onClose={handlePopupClose} onAddPlace={handleAddPlaceSumbmit}></AddPlacePopup>
-      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={handlePopupClose} onUpdateAvatar={handleUpdateAvatar}></EditAvatarPopup>
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateProfile}></EditProfilePopup>
+      <AddPlacePopup isOpen={isAddCardPopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSumbmit}></AddPlacePopup>
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}></EditAvatarPopup>
       <PopupWithForm name="remove-card" title="Вы уверены?" onClose={closeAllPopups} buttonTitle="Да" />
-      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+      <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
     </CurrentUserContext.Provider>
   );
 }
