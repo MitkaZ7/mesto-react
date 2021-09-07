@@ -124,7 +124,7 @@ function App() {
           onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelet={handleCardDelete} cards={cards}/>
         <Footer />
       </div>
-      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={handlePopupClose} onUpdateProfile={handleUpdateProfile}></EditProfilePopup>
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={handlePopupClose} onUpdateUser={handleUpdateProfile}></EditProfilePopup>
       <AddPlacePopup isOpen={isAddCardPopupOpen} onClose={handlePopupClose} onAddPlace={handleAddPlaceSumbmit}></AddPlacePopup>
       <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={handlePopupClose} onUpdateAvatar={handleUpdateAvatar}></EditAvatarPopup>
       <PopupWithForm name="remove-card" title="Вы уверены?" onClose={closeAllPopups} buttonTitle="Да" />
