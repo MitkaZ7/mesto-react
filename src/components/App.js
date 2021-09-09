@@ -34,11 +34,6 @@ function App() {
     setIsAddCardPopupOpen(false);
     setSelectedCard({});
   }
-  // function closeOverlay(evt) {
-  //   if (evt.target === evt.currentTarget) {
-  //     closeAllPopups()
-  //   }
-  // }
   function handleUpdateAvatar(avatar) {
     api
       .editUserAvatar(avatar)
@@ -71,7 +66,6 @@ function App() {
         console.log('Ошибка, данные пользователя не загрузились');
       })
   }, []);
-
   function handleAddPlaceSumbmit(card) {
     api
       .addNewCard(card)
@@ -83,7 +77,6 @@ function App() {
         console.log('Ошибка, не удалось добавить новую карточку');
       })
   }
-
   function handleCardLike(card) {
     const isLiked = card.likes.some(myLike => myLike._id === currentUser._id);
     api
